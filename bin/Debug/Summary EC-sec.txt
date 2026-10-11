@@ -1,0 +1,75 @@
+chapter 1:
+what is Electronic Commerce ?
+Explore Major Business Models :
+B2B B2C C2C
+what are challenges in E-Commerce ?
+what role CIA in E-commerce ?
+
+1)
+E-commerce : Buying and Selling of Goods or Services using the internet and Transaction and Data Personal
+
+Why Protection E-C ?
+1) Prevent Transaction Financial data sensitive 
+2) Prevent PLL (Personal identifiable info)
+3) Destroy reputation Company
+4) Legal Compliance is mandatory ex: 
+PCI DSS --> Standard To how Payment Clients Money
+GDPR --> Protection Data Personal from Published 
+
+
+what is 3D Security?
+1) source Card
+2) supply Payment
+3) domain Run System corrodent connection
+
+
+CNP --> Card Not Present Fraud
+
+3) Challenges ?
+1) payment card fraud
+
+
+chapter 3 Part ||
+cross site request forgery (CSRF)
+
+what is CSRF ?
+what is the impact ?
+how work CSRF ?
+Delivering CSRF Exploit ?
+Defensive Methods CSRF ?
+
+CSRF : Vuln Web Site allow Attacker Leading Users to Perform Action Not intend and allow attacker evade partly on  Policy (Same origin Policy) SOP
+
+
+conditions To CSRF ?
+1) A Relevant Action 
+2) cookie based Session 
+3) No Unpredictable Parameters
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
