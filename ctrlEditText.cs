@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -35,12 +36,64 @@ namespace EditorTextAdvance
                 }
             }
         }
+        public StringBuilder strb=new StringBuilder("");
         FormSreachReguler formSearch;
         FormEnterValue formReplace;
         FormSreachReguler formSearchAndDetailes;
         FormSearchQuick formSearchqui;
 
         private string ContainToReturn { get; set; }
+
+
+        public string changeColor
+        {
+            get
+            {
+                return richTextBox1.BackColor.Name;
+            }
+            set
+            {
+                // تحويل النص إلى لون مباشرة
+                Color selectedColor = Color.FromName(value);
+
+                // تطبيق الخلفية على الأدوات
+                richTextBox1.BackColor = selectedColor;
+                textBox1.BackColor = selectedColor;
+                groupBox1.BackColor = selectedColor;
+
+                // تحديد لون الخط بناءً على ما إذا كان اللون أسود أو داكناً
+                if (value.Equals("Black", StringComparison.OrdinalIgnoreCase) || selectedColor.GetBrightness() < 0.2f)
+                {
+                    groupBox1.ForeColor = Color.White;
+                    textBox1.ForeColor = Color.White;
+                    richTextBox1.ForeColor = Color.White;
+                    checkBox1.ForeColor = Color.White;
+
+                    textBox1.Enabled = true;
+                    textBox1.ReadOnly = true;
+                }
+                else
+                {
+                    groupBox1.ForeColor = Color.Black;
+                    textBox1.ForeColor = Color.Black;
+                    richTextBox1.ForeColor = Color.Black;
+                    checkBox1.ForeColor = Color.Black;
+                }
+
+                // تحديث لون كل النصوص داخل الـ RichTextBox لتتوافق مع الثيم الجديد
+                if (richTextBox1.TextLength > 0)
+                {
+                    int selStart = richTextBox1.SelectionStart;
+                    int selLen = richTextBox1.SelectionLength;
+
+                    richTextBox1.SelectAll();
+                    richTextBox1.SelectionColor = richTextBox1.ForeColor; // جعل النص أبيض أو أسود حسب الثيم
+
+                    // إعادة المؤشر لمكانه الطبيعي وإلغاء التحديد الأزرق
+                    richTextBox1.Select(selStart, selLen);
+                }
+            }
+        }
         public event Action<string> NameTextFileChanged;
         public event Action CloseTabPageAndSave;
         protected virtual void OncloseTabPageAndSave()
@@ -86,8 +139,8 @@ namespace EditorTextAdvance
 
         private void ctrlEditText_Load(object sender, EventArgs e)
         {
-            
-            textBox1.Enabled = false;
+
+            textBox1.ReadOnly = true;
             capitalLetterFirstLetterToolStripMenuItem.Checked = false;
             capitalLetterToolStripMenuItem.Checked = false;
             smallLetterToolStripMenuItem.Checked = false;
@@ -113,8 +166,26 @@ namespace EditorTextAdvance
             formSearchqui = new FormSearchQuick();
             formSearchqui.ChangeText += EventChangeText;
             // ربط أحداث التمرير والتغيير لتحديث الأرقام لحظياً
+            richTextBox1.BackColor = Color.FromName(clsGlobalSetting.value);
+            textBox1.BackColor= Color.FromName(clsGlobalSetting.value); 
+            groupBox1.BackColor= Color.FromName(clsGlobalSetting.value);
 
-
+            if (richTextBox1.BackColor == Color.Black)
+            {
+                textBox1.ReadOnly = true;
+                textBox1.ForeColor = Color.WhiteSmoke ;
+                groupBox1.ForeColor = Color.White;
+                richTextBox1.ForeColor = Color.White;
+                checkBox1.ForeColor = Color.White;
+              
+            }
+            else
+            {
+                groupBox1.ForeColor = Color.Black;
+                textBox1.ForeColor = Color.Black;
+                richTextBox1.ForeColor = Color.Black;
+                checkBox1.ForeColor = Color.Black;
+            }
 
         }
 
@@ -181,16 +252,7 @@ namespace EditorTextAdvance
         private void Implementforamting(object sender,EventArgs e)
         {
             
-            if (capitalLetterToolStripMenuItem.Checked)
-            {
-                capitalLetterToolStripMenuItem_Click(sender,e);
-                return;
-            }
-            if(smallLetterToolStripMenuItem.Checked)
-            {
-                smallLetterToolStripMenuItem_Click(sender,e);
-                return;
-            }
+          
             
            
           
@@ -228,7 +290,7 @@ namespace EditorTextAdvance
                 richTextBox1.SelectAll();
             }
             string Temp = richTextBox1.SelectedText;
-                richTextBox1.Text = "";
+                richTextBox1.SelectedText = "";
                 string[] lines = Temp.Split(new[] { '\n' }, StringSplitOptions.None);
                 foreach (string i in lines)
                 {
@@ -248,36 +310,28 @@ namespace EditorTextAdvance
 
                         }
                     }
-
                 }
+               
+
             }
-            richTextBox1.Text = Temp;
+            richTextBox1.SelectedText += Temp;
+
 
         }
 
-       
+
         private void smallLetterToolStripMenuItem_Click(object sender, EventArgs e)
         {
             capitalLetterFirstLetterToolStripMenuItem.Checked = false;
             capitalLetterToolStripMenuItem.Checked = false;
             returnTextOriginalToolStripMenuItem.Checked = false;
-            if (smallLetterToolStripMenuItem.Checked)
-            {
+         
                 if (richTextBox1.SelectionLength == 0)
                 {
                     richTextBox1.SelectAll();
                 }
                 richTextBox1.SelectedText = richTextBox1.SelectedText.ToLower();
-            }
-            else
-            {
-                if (richTextBox1.SelectionLength== 0)
-                {
-                    richTextBox1.SelectAll();
-                }
-                richTextBox1.SelectedText = richTextBox1.SelectedText.ToUpper();
-                capitalLetterToolStripMenuItem.Checked = true;
-            }
+            
            
         
             richTextBox1.SelectionStart = richTextBox1.Text.Length;
@@ -291,24 +345,15 @@ namespace EditorTextAdvance
             capitalLetterFirstLetterToolStripMenuItem.Checked = false;
             smallLetterToolStripMenuItem.Checked = false;
             returnTextOriginalToolStripMenuItem.Checked = false;
-            if (capitalLetterToolStripMenuItem.Checked)
-            {
+            
+            
                 if (richTextBox1.SelectionLength == 0)
                 {
                     richTextBox1.SelectAll();
                 }
                 richTextBox1.SelectedText = richTextBox1.SelectedText.ToUpper();
                
-            }
-            else
-            {
-                if (richTextBox1.SelectionLength == 0)
-                {
-                    richTextBox1.SelectAll();
-                }
-                richTextBox1.SelectedText = richTextBox1.SelectedText.ToLower();
-                smallLetterToolStripMenuItem.Checked = true;
-            }
+            
        
             richTextBox1.SelectionStart = richTextBox1.Text.Length;
             richTextBox1.SelectionLength = 0;
@@ -429,7 +474,7 @@ namespace EditorTextAdvance
             
         }
         private void numberingLines() {
-            textBox1.Enabled = false;
+            
             //if (richTextBox1.Text.Length == 0)
             //{
             //    return;
@@ -479,11 +524,18 @@ namespace EditorTextAdvance
 
             textBox1.Text = sb.ToString();
         }
+        private void lockedHashs(bool val)
+        {
+            textBox2.Enabled = val;
+            textBox3.Enabled = val;
+            textBox4.Enabled = val;
+        }
         private void richTextBox1_TextChanged_1(object sender, EventArgs e)
         {
             Implementforamting(sender, e);
             RefreashMetaData();
             numberingLines();
+            lockedHashs(false);
         }
 
         private void appendTextToolStripMenuItem_Click(object sender, EventArgs e)
@@ -707,7 +759,7 @@ namespace EditorTextAdvance
             formSearch.Hide();
             richTextBox1.Focus();
             richTextBox1.SelectAll();
-            richTextBox1.SelectionBackColor = richTextBox1.BackColor;
+            richTextBox1.SelectionBackColor = Color.FromName(clsGlobalSetting.value);
             string namefile = "temp.txt";
             int cursorindex = 0;
             if (file == null)
@@ -966,6 +1018,8 @@ namespace EditorTextAdvance
                 richTextBox1.SelectionFont = fontDialog1.Font;
                 richTextBox1.SelectionColor = fontDialog1.Color;
                 colorDialog1.Color = fontDialog1.Color;
+                textBox1.Font = fontDialog1.Font;
+                textBox1.ForeColor = fontDialog1.Color;
                     
             }
         }
@@ -1399,7 +1453,7 @@ namespace EditorTextAdvance
             if (file != null)
             {
                 FileInfo Info = new FileInfo(file.FilePath);
-
+                
                 if (!Info.Exists)
                 {
                     MessageBox.Show("File does not exist.");
@@ -1422,6 +1476,179 @@ namespace EditorTextAdvance
                     MessageBoxIcon.Information
                 );
             }
+        }
+
+        private void ctrlEditText_BackColorChanged(object sender, EventArgs e)
+        {
+            textBox1.BackColor = richTextBox1.BackColor;
+            groupBox1.BackColor = richTextBox1.BackColor;
+            richTextBox1.SelectionLength = 0;
+        }
+
+        private void richTextBox1_Click(object sender, EventArgs e)
+        {
+           
+            
+            richTextBox1.BackColor = Color.FromName(clsGlobalSetting.value);
+        }
+
+        private void sha512ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (SHA512 sha = SHA512.Create())
+            {
+                byte[] valuehash = sha.ComputeHash(Encoding.UTF8.GetBytes(richTextBox1.Text));
+                textBox3.Text = BitConverter.ToString(valuehash).Replace("-","").ToLower();
+                textBox3.Enabled = true;
+            }
+            
+            
+        }
+
+        private void shaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using(SHA256 sha = SHA256.Create())
+            {
+                byte[] valuehash = sha.ComputeHash(Encoding.UTF8.GetBytes(richTextBox1.Text));
+                textBox2.Text = BitConverter.ToString(valuehash).Replace("-","").ToLower();
+                textBox2.Enabled = true;
+            }
+        }
+
+        private void mD5ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (MD5 md = MD5.Create())
+            {
+                byte[] valuehash = md.ComputeHash(Encoding.UTF8.GetBytes(richTextBox1.Text));
+                textBox4.Text = BitConverter.ToString(valuehash).Replace("-", "").ToLower();
+                textBox4.Enabled = true;
+            }
+        }
+        private void GetKeyEncry(string str1,string s)
+        {
+            strb.Append(str1);
+            clsCyptography.EncryptFile(clsGlobalSetting.PathInput,clsGlobalSetting.PathDestinationEncryption,str1);
+        }
+
+        private void encryptionTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clsGlobalSetting.PathInput = "temp.txt";
+            if (file == null)
+            {
+
+
+                if (File.Exists(clsGlobalSetting.PathInput))
+                {
+                    File.WriteAllText(clsGlobalSetting.PathInput, richTextBox1.Text);
+                }
+                else
+                {
+                    File.Create(clsGlobalSetting.PathInput);
+                    File.WriteAllText(clsGlobalSetting.PathInput, richTextBox1.Text);
+                }
+            }
+            else
+            {
+                if (counter == 0)
+                {
+                    counter++;
+                    ContainToReturn = file.DumpingContain();
+                }
+                file.ReWriteFile(richTextBox1.Text);
+                clsGlobalSetting.PathInput = file.FilePath;
+            }
+
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+              
+                    clsGlobalSetting.PathDestinationEncryption=(folderBrowserDialog1.SelectedPath);
+                    clsGlobalSetting.PathDestinationEncryption+=("\\" + Path.GetFileNameWithoutExtension(clsGlobalSetting.PathInput) + "_Encry.txt");
+                    if (File.Exists(clsGlobalSetting.PathDestinationEncryption))
+                    {
+                        FormEnterValue f = new FormEnterValue(false);
+                        f.SendValue += GetKeyEncry;
+                    f.StartPosition = FormStartPosition.Manual;
+                    f.Location = new Point(1000, 20);
+                    f.Show();
+                    }
+                    else
+                    {
+                        using (File.Create(clsGlobalSetting.PathDestinationEncryption))
+                        {
+                        FormEnterValue f = new FormEnterValue(false);
+                        f.SendValue += GetKeyEncry;
+                        f.StartPosition = FormStartPosition.Manual;
+                        f.Location = new Point(1000, 20);
+                        f.Show();
+                    }
+                    }
+                
+            }
+
+        }
+        private void EventSendPathToEncryption(string str)
+        {
+            clsGlobalSetting.PathDestinationEncryption = str;
+        }
+       
+        private void GetKeyDcry(string str1, string s)
+        {
+            strb.Append(str1);
+           
+
+           clsCyptography.DecryptFile(clsGlobalSetting.PathDestinationEncryption, clsGlobalSetting.PathDestinationDecryption, str1);
+            
+
+          
+        }
+
+        private void decryptionTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormEnterPath f = new FormEnterPath();
+            f.SendPath += EventSendPathToEncryption;
+            f.ShowDialog();
+            clsGlobalSetting.PathInput = "temp.txt";
+            if (file == null)
+            {
+
+
+                if (File.Exists(clsGlobalSetting.PathInput))
+                {
+                    File.WriteAllText(clsGlobalSetting.PathInput, richTextBox1.Text);
+                }
+                else
+                {
+                    File.Create(clsGlobalSetting.PathInput);
+                    File.WriteAllText(clsGlobalSetting.PathInput, richTextBox1.Text);
+                }
+            }
+            else
+            {
+                if (counter == 0)
+                {
+                    counter++;
+                    ContainToReturn = file.DumpingContain();
+                }
+                file.ReWriteFile(richTextBox1.Text);
+                clsGlobalSetting.PathInput = file.FilePath;
+            }
+
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                clsGlobalSetting.PathDestinationDecryption = (folderBrowserDialog1.SelectedPath);
+                clsGlobalSetting.PathDestinationDecryption += ("\\" + Path.GetFileNameWithoutExtension(clsGlobalSetting.PathDestinationEncryption) + "_Decry.txt");
+
+                // تم حذف الـ using و File.Create بالكامل من هنا لئلا يحجز الملف
+                // لأن دالة التشفير/فك التشفير ستقوم بإنشائه وقت الحاجة تلقائياً
+
+                FormEnterValue fe = new FormEnterValue();
+                fe.SendValue += GetKeyDcry;
+                fe.StartPosition = FormStartPosition.Manual;
+                fe.Location = new Point(1000,20);
+                fe.Show(); // فتح نافذة المفتاح بأمان دون حجز أي ملف في الخلفية
+            }
+
+
+
         }
     }
 }

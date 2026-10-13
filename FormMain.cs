@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -64,6 +66,7 @@ namespace EditorTextAdvance
                 tabControl1.TabPages.Insert(tabControl1.TabCount - 1, newTab);
                 tabControl1.SelectedTab = newTab;
                 newTab.Tag = "???";
+                newTab.BackColor=Color.FromName(clsGlobalSetting.value);
                 ctrlEditText ctrl = new ctrlEditText();
                 ctrl.Dock = DockStyle.Fill;
                 ctrl.Tag = newTab.Tag;
@@ -100,6 +103,7 @@ namespace EditorTextAdvance
                 
                     int newIndex = tabControl1.TabCount-1+counter;
                     TabPage newTab = new TabPage("New Page " + newIndex);
+                    newTab.BackColor = Color.FromName(clsGlobalSetting.value);
                     ctrlEditText ctrl = new ctrlEditText();
 
                     if (File.Exists(path)) {
@@ -159,13 +163,13 @@ namespace EditorTextAdvance
 
             if (isSelected)
             {
-                backBrush = new SolidBrush(Color.LightSlateGray); // لون التبويب النشط (المحدد)
+                backBrush = new SolidBrush(Color.FromName(clsGlobalSetting.value)); // لون التبويب النشط (المحدد)
                 textBrush = Brushes.White;                // لون النص للتاب النشط
             }
             else
             {
-                backBrush = new SolidBrush(Color.Transparent); // لون التبويبات العادية
-                textBrush = Brushes.Black;                  // لون النص للتبويبات العادية
+                backBrush = new SolidBrush(Color.FromName(clsGlobalSetting.value)); // لون التبويبات العادية
+                textBrush = Brushes.White ;                  // لون النص للتبويبات العادية
             }
 
            
@@ -305,6 +309,7 @@ namespace EditorTextAdvance
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            clsGlobalSetting.value = Registry.GetValue(clsGlobalSetting.key, clsGlobalSetting.name, null) as string;
             clsGlobalform.MainForm = this;
             this.MaximizeBox = false;
             this.WindowState = FormWindowState.Maximized;
@@ -313,7 +318,7 @@ namespace EditorTextAdvance
                 tabControl1.DrawMode = TabDrawMode.OwnerDrawFixed;
                 int newIndex = tabControl1.TabCount;
                 TabPage newTab = new TabPage("New Page " + newIndex);
-
+                newTab.BackColor = Color.FromName(clsGlobalSetting.value);
                 tabControl1.TabPages.Insert(tabControl1.TabCount - 1, newTab);
                 newTab.Tag = "???";
                 tabControl1.SelectedTab = newTab;
@@ -385,6 +390,75 @@ namespace EditorTextAdvance
                 e.Cancel = true;
             }
 
+        }
+
+        private void darkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            Registry.SetValue(clsGlobalSetting.key, clsGlobalSetting.name, "DarkGray");
+            this.BackColor = Color.FromName("DarkGray");
+            clsGlobalSetting.value = "DarkGray";
+            
+            foreach (TabPage i in tabControl1.TabPages)
+                {
+                if (i.Tag.ToString() != "+")
+                {
+                    i.BackColor = Color.FromName("DarkGray"); ;
+                    ((ctrlEditText)i.Controls[0]).changeColor = clsGlobalSetting.value;
+                }
+                }
+        }
+
+        private void lightToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Registry.SetValue(clsGlobalSetting.key, clsGlobalSetting.name, "LightGray");
+           
+            this.BackColor = Color.FromName("LightGray");
+            clsGlobalSetting.value = "LightGray";
+            foreach (TabPage i in tabControl1.TabPages)
+            {
+                if (i.Tag.ToString() != "+")
+                {
+                    i.BackColor = Color.FromName("LightGray");
+
+                    ((ctrlEditText)i.Controls[0]).changeColor = clsGlobalSetting.value;
+                }
+            }
+        }
+
+        private void costumColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            Registry.SetValue(clsGlobalSetting.key, clsGlobalSetting.name, "LightSteelBlue");
+            clsGlobalSetting.value = "LightSteelBlue";
+            this.BackColor = Color.FromName(clsGlobalSetting.value);
+           
+            foreach (TabPage i in tabControl1.TabPages)
+            {
+                if (i.Tag.ToString() != "+")
+                {
+                    i.BackColor = Color.FromName(clsGlobalSetting.value);
+
+                    ((ctrlEditText)i.Controls[0]).changeColor = clsGlobalSetting.value;
+                }
+            }
+        }
+
+        private void blackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Registry.SetValue(clsGlobalSetting.key, clsGlobalSetting.name, "Black");
+            clsGlobalSetting.value = "Black";
+            this.BackColor = Color.FromName(clsGlobalSetting.value);
+
+            foreach (TabPage i in tabControl1.TabPages)
+            {
+                if (i.Tag.ToString() != "+")
+                {
+                    i.BackColor = Color.FromName(clsGlobalSetting.value);
+
+                    ((ctrlEditText)i.Controls[0]).changeColor = clsGlobalSetting.value;
+                }
+            }
         }
     } 
 }

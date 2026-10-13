@@ -13,13 +13,22 @@ namespace EditorTextAdvance
     public partial class ctrlSendValue : UserControl
     {
 
-        public event Action<string,string> OnSendValuel;
+        public event Action<string,string> OnSendValue;
         protected virtual void SendValue(string str,string Newstr)
         {
-            Action<string,string> handler = OnSendValuel;
+            Action<string,string> handler = OnSendValue;
             if (handler != null)
             {
                 handler(str,Newstr);
+            }
+        }
+        public event Action<int> OnSendValuelINT;
+        protected virtual void SendValueINT(int num)
+        {
+            Action<int> handler = OnSendValuelINT;
+            if (handler != null)
+            {
+                handler(num);
             }
         }
         bool ShowToRepalce;
@@ -51,8 +60,9 @@ namespace EditorTextAdvance
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(textBox1.Text))
-            {
+           
+        
+            
                 if (ShowToRepalce)
                 {
                     if (!string.IsNullOrEmpty(textBox2.Text))
@@ -66,13 +76,10 @@ namespace EditorTextAdvance
                 }
                 else
                 {
-                    SendValue(textBox1.Text, "");
+
+                SendValue(textBox1.Text, "");
                 }
-            }
-            else
-            {
-                label2.Text = "Please Enter Value In TextBox";
-            }
+            
         }
 
         private void ctrlSendValue_Load(object sender, EventArgs e)

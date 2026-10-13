@@ -48,7 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="clsCyptography.cs" />
     <Compile Include="clsGlobalform.cs" />
+    <Compile Include="clsGlobalSetting.cs" />
     <Compile Include="ctrlEditText.cs">
       <SubType>UserControl</SubType>
     </Compile>

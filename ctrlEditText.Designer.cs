@@ -88,9 +88,6 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.showBasicInfoFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showDetailsFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuToTextBoxMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
@@ -107,6 +104,12 @@
             this.selectAllTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.lbLines = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.lbLastupdate = new System.Windows.Forms.Label();
@@ -122,6 +125,7 @@
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.menuStrip1.SuspendLayout();
             this.contextMenuToTextBoxMain.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -137,10 +141,7 @@
             this.searchToolStripMenuItem,
             this.toolviewMenuItem1,
             this.toolsToolStripMenuItem,
-            this.toolStripMenuItem2,
-            this.toolStripMenuItem3,
-            this.toolStripMenuItem10,
-            this.toolStripMenuItem11});
+            this.toolStripMenuItem2});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1139, 28);
@@ -368,7 +369,6 @@
             // 
             // capitalLetterToolStripMenuItem
             // 
-            this.capitalLetterToolStripMenuItem.CheckOnClick = true;
             this.capitalLetterToolStripMenuItem.Name = "capitalLetterToolStripMenuItem";
             this.capitalLetterToolStripMenuItem.Size = new System.Drawing.Size(252, 26);
             this.capitalLetterToolStripMenuItem.Text = "Capital Letter";
@@ -376,9 +376,6 @@
             // 
             // smallLetterToolStripMenuItem
             // 
-            this.smallLetterToolStripMenuItem.Checked = true;
-            this.smallLetterToolStripMenuItem.CheckOnClick = true;
-            this.smallLetterToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Indeterminate;
             this.smallLetterToolStripMenuItem.Name = "smallLetterToolStripMenuItem";
             this.smallLetterToolStripMenuItem.Size = new System.Drawing.Size(252, 26);
             this.smallLetterToolStripMenuItem.Text = "Small Letter";
@@ -433,21 +430,21 @@
             // searchToWordToolStripMenuItem
             // 
             this.searchToWordToolStripMenuItem.Name = "searchToWordToolStripMenuItem";
-            this.searchToWordToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.searchToWordToolStripMenuItem.Size = new System.Drawing.Size(217, 26);
             this.searchToWordToolStripMenuItem.Text = "Search To Word";
             this.searchToWordToolStripMenuItem.Click += new System.EventHandler(this.searchToWordToolStripMenuItem_Click);
             // 
             // searchAndDetailsToolStripMenuItem
             // 
             this.searchAndDetailsToolStripMenuItem.Name = "searchAndDetailsToolStripMenuItem";
-            this.searchAndDetailsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.searchAndDetailsToolStripMenuItem.Size = new System.Drawing.Size(217, 26);
             this.searchAndDetailsToolStripMenuItem.Text = "Search And Details";
             this.searchAndDetailsToolStripMenuItem.Click += new System.EventHandler(this.searchAndDetailsToolStripMenuItem_Click);
             // 
             // searchQuickToolStripMenuItem
             // 
             this.searchQuickToolStripMenuItem.Name = "searchQuickToolStripMenuItem";
-            this.searchQuickToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.searchQuickToolStripMenuItem.Size = new System.Drawing.Size(217, 26);
             this.searchQuickToolStripMenuItem.Text = "Search Quick";
             this.searchQuickToolStripMenuItem.Click += new System.EventHandler(this.searchQuickToolStripMenuItem_Click);
             // 
@@ -563,12 +560,14 @@
             this.encryptionTextToolStripMenuItem.Name = "encryptionTextToolStripMenuItem";
             this.encryptionTextToolStripMenuItem.Size = new System.Drawing.Size(254, 26);
             this.encryptionTextToolStripMenuItem.Text = "Encryption Text";
+            this.encryptionTextToolStripMenuItem.Click += new System.EventHandler(this.encryptionTextToolStripMenuItem_Click);
             // 
             // decryptionTextToolStripMenuItem
             // 
             this.decryptionTextToolStripMenuItem.Name = "decryptionTextToolStripMenuItem";
             this.decryptionTextToolStripMenuItem.Size = new System.Drawing.Size(254, 26);
             this.decryptionTextToolStripMenuItem.Text = "Decryption Text";
+            this.decryptionTextToolStripMenuItem.Click += new System.EventHandler(this.decryptionTextToolStripMenuItem_Click);
             // 
             // calculatingHashToTextToolStripMenuItem
             // 
@@ -585,18 +584,21 @@
             this.sha512ToolStripMenuItem.Name = "sha512ToolStripMenuItem";
             this.sha512ToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
             this.sha512ToolStripMenuItem.Text = "Sha 512";
+            this.sha512ToolStripMenuItem.Click += new System.EventHandler(this.sha512ToolStripMenuItem_Click);
             // 
             // shaToolStripMenuItem
             // 
             this.shaToolStripMenuItem.Name = "shaToolStripMenuItem";
             this.shaToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
             this.shaToolStripMenuItem.Text = "Sha 256";
+            this.shaToolStripMenuItem.Click += new System.EventHandler(this.shaToolStripMenuItem_Click);
             // 
             // mD5ToolStripMenuItem
             // 
             this.mD5ToolStripMenuItem.Name = "mD5ToolStripMenuItem";
             this.mD5ToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
             this.mD5ToolStripMenuItem.Text = "MD5";
+            this.mD5ToolStripMenuItem.Click += new System.EventHandler(this.mD5ToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
@@ -610,34 +612,16 @@
             // showBasicInfoFileToolStripMenuItem
             // 
             this.showBasicInfoFileToolStripMenuItem.Name = "showBasicInfoFileToolStripMenuItem";
-            this.showBasicInfoFileToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.showBasicInfoFileToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
             this.showBasicInfoFileToolStripMenuItem.Text = "Show Basic Info File";
             this.showBasicInfoFileToolStripMenuItem.Click += new System.EventHandler(this.showBasicInfoFileToolStripMenuItem_Click);
             // 
             // showDetailsFileToolStripMenuItem
             // 
             this.showDetailsFileToolStripMenuItem.Name = "showDetailsFileToolStripMenuItem";
-            this.showDetailsFileToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.showDetailsFileToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
             this.showDetailsFileToolStripMenuItem.Text = "Show Details File";
             this.showDetailsFileToolStripMenuItem.Click += new System.EventHandler(this.showDetailsFileToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(27, 24);
-            this.toolStripMenuItem3.Text = " ";
-            // 
-            // toolStripMenuItem10
-            // 
-            this.toolStripMenuItem10.Name = "toolStripMenuItem10";
-            this.toolStripMenuItem10.Size = new System.Drawing.Size(27, 24);
-            this.toolStripMenuItem10.Text = " ";
-            // 
-            // toolStripMenuItem11
-            // 
-            this.toolStripMenuItem11.Name = "toolStripMenuItem11";
-            this.toolStripMenuItem11.Size = new System.Drawing.Size(27, 24);
-            this.toolStripMenuItem11.Text = " ";
             // 
             // contextMenuToTextBoxMain
             // 
@@ -746,6 +730,12 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.LightSlateGray;
+            this.groupBox1.Controls.Add(this.textBox4);
+            this.groupBox1.Controls.Add(this.textBox3);
+            this.groupBox1.Controls.Add(this.textBox2);
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.lbLines);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.lbLastupdate);
@@ -754,92 +744,147 @@
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.lbcharcount);
             this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.Color.White;
             this.groupBox1.Location = new System.Drawing.Point(3, 453);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1136, 153);
+            this.groupBox1.Size = new System.Drawing.Size(1136, 220);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "MetaData";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
+            // textBox4
+            // 
+            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox4.Location = new System.Drawing.Point(97, 137);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(772, 22);
+            this.textBox4.TabIndex = 16;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox3.Location = new System.Drawing.Point(97, 99);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(772, 22);
+            this.textBox3.TabIndex = 15;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox2.Location = new System.Drawing.Point(97, 62);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(772, 22);
+            this.textBox2.TabIndex = 14;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(6, 102);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(114, 16);
+            this.label10.TabIndex = 12;
+            this.label10.Text = "Sha512 Value : ";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(6, 140);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(125, 16);
+            this.label8.TabIndex = 10;
+            this.label8.Text = "Sha MD5 Value : ";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(6, 65);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(114, 16);
+            this.label6.TabIndex = 8;
+            this.label6.Text = "Sha256 Value : ";
+            // 
             // lbLines
             // 
             this.lbLines.AutoSize = true;
-            this.lbLines.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbLines.Location = new System.Drawing.Point(142, 92);
+            this.lbLines.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbLines.Location = new System.Drawing.Point(435, 33);
             this.lbLines.Name = "lbLines";
-            this.lbLines.Size = new System.Drawing.Size(48, 25);
+            this.lbLines.Size = new System.Drawing.Size(31, 16);
             this.lbLines.TabIndex = 7;
             this.lbLines.Text = "???";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(13, 92);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(354, 33);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(147, 25);
+            this.label5.Size = new System.Drawing.Size(99, 16);
             this.label5.TabIndex = 6;
             this.label5.Text = "Count Lines : ";
             // 
             // lbLastupdate
             // 
             this.lbLastupdate.AutoSize = true;
-            this.lbLastupdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbLastupdate.Location = new System.Drawing.Point(389, 92);
+            this.lbLastupdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbLastupdate.Location = new System.Drawing.Point(620, 33);
             this.lbLastupdate.Name = "lbLastupdate";
-            this.lbLastupdate.Size = new System.Drawing.Size(48, 25);
+            this.lbLastupdate.Size = new System.Drawing.Size(31, 16);
             this.lbLastupdate.TabIndex = 5;
             this.lbLastupdate.Text = "???";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(269, 92);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(535, 33);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(140, 25);
+            this.label3.Size = new System.Drawing.Size(99, 16);
             this.label3.TabIndex = 4;
             this.label3.Text = "last Update : ";
             // 
             // lbWordcount
             // 
             this.lbWordcount.AutoSize = true;
-            this.lbWordcount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbWordcount.Location = new System.Drawing.Point(405, 33);
+            this.lbWordcount.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbWordcount.Location = new System.Drawing.Point(267, 33);
             this.lbWordcount.Name = "lbWordcount";
-            this.lbWordcount.Size = new System.Drawing.Size(48, 25);
+            this.lbWordcount.Size = new System.Drawing.Size(31, 16);
             this.lbWordcount.TabIndex = 3;
             this.lbWordcount.Text = "???";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(270, 33);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(176, 33);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(158, 25);
+            this.label4.Size = new System.Drawing.Size(107, 16);
             this.label4.TabIndex = 2;
             this.label4.Text = "Count Words : ";
             // 
             // lbcharcount
             // 
             this.lbcharcount.AutoSize = true;
-            this.lbcharcount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbcharcount.Location = new System.Drawing.Point(141, 33);
+            this.lbcharcount.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbcharcount.Location = new System.Drawing.Point(94, 33);
             this.lbcharcount.Name = "lbcharcount";
-            this.lbcharcount.Size = new System.Drawing.Size(48, 25);
+            this.lbcharcount.Size = new System.Drawing.Size(31, 16);
             this.lbcharcount.TabIndex = 1;
             this.lbcharcount.Text = "???";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(11, 33);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(149, 25);
+            this.label1.Size = new System.Drawing.Size(102, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "Charachters : ";
             // 
@@ -858,6 +903,7 @@
             this.richTextBox1.TabIndex = 6;
             this.richTextBox1.Text = "";
             this.richTextBox1.VScroll += new System.EventHandler(this.richTextBox1_VScroll);
+            this.richTextBox1.Click += new System.EventHandler(this.richTextBox1_Click);
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged_1);
             this.richTextBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.richTextBox1_KeyPress);
             this.richTextBox1.Move += new System.EventHandler(this.richTextBox1_Move);
@@ -881,7 +927,6 @@
             // textBox1
             // 
             this.textBox1.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.textBox1.Enabled = false;
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.ForeColor = System.Drawing.Color.White;
             this.textBox1.Location = new System.Drawing.Point(3, 38);
@@ -904,8 +949,9 @@
             this.Controls.Add(this.menuStrip1);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.Name = "ctrlEditText";
-            this.Size = new System.Drawing.Size(1139, 702);
+            this.Size = new System.Drawing.Size(1139, 943);
             this.Load += new System.EventHandler(this.ctrlEditText_Load);
+            this.BackColorChanged += new System.EventHandler(this.ctrlEditText_BackColorChanged);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.contextMenuToTextBoxMain.ResumeLayout(false);
@@ -969,7 +1015,6 @@
         private System.Windows.Forms.ToolStripMenuItem showBasicInfoFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showDetailsFileToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
@@ -1009,7 +1054,12 @@
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem10;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     }
 }

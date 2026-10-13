@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.button1 = new System.Windows.Forms.Button();
-            this.ctrlSendValue1 = new EditorTextAdvance.ctrlSendValue(Show);
+            this.ctrlSendValue1 = new EditorTextAdvance.ctrlSendValue();
             this.SuspendLayout();
             // 
             // button1
@@ -51,7 +51,8 @@
             this.ctrlSendValue1.Name = "ctrlSendValue1";
             this.ctrlSendValue1.Size = new System.Drawing.Size(576, 189);
             this.ctrlSendValue1.TabIndex = 3;
-            this.ctrlSendValue1.OnSendValuel += new System.Action<string, string>(this.ctrlSendValue1_OnSendValuel);
+            this.ctrlSendValue1.OnSendValue += new System.Action<string, string>(this.ctrlSendValue1_OnSendValue);
+            this.ctrlSendValue1.OnSendValuelINT += new System.Action<int>(this.ctrlSendValue1_OnSendValuelINT);
             this.ctrlSendValue1.Load += new System.EventHandler(this.ctrlSendValue1_Load_1);
             // 
             // FormEnterValue

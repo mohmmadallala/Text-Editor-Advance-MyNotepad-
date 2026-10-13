@@ -14,6 +14,7 @@ namespace EditorTextAdvance
     {
         public delegate void OnsendValue(string str,string str2);
         public event OnsendValue SendValue;
+     
         public delegate void CloseForm();
 
         public event CloseForm OnCloseForm;
@@ -43,19 +44,29 @@ namespace EditorTextAdvance
 
         }
 
-        private void ctrlSendValue1_OnSendValuel(string arg1, string arg2)
+        private void ctrlSendValue1_OnSendValue(string arg1, string arg2)
         {
-            if (!string.IsNullOrEmpty(arg1)&&!string.IsNullOrEmpty(arg2))
+            if (!string.IsNullOrEmpty(arg1))
             {
                 SendValue?.Invoke(arg1,arg2);
-                
             }
+          
             
         }
+        
 
         private void button1_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void ctrlSendValue1_OnSendValuelINT(int obj)
+        {
+
+           
+             
+
+            
         }
     }
 }
